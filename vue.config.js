@@ -151,7 +151,7 @@ module.exports = {
   // CSS 相关 loader
   css: {
     modules: false, // 启用 CSS modules 默认 false
-    extract: true, // 是否使用 css 分离插件，默认生产环境下是 true，开发环境下是 false
+    // extract: true, // 是否使用 css 分离插件，默认生产环境下是 true，开发环境下是 false
     sourceMap: false, // 是否为 CSS 开启 source map, 默认 false
     // css预设器配置项
     loaderOptions: {
@@ -167,22 +167,22 @@ module.exports = {
     https: false, // https:{type:Boolean}
     open: false, // 配置自动启动浏览器
     hotOnly: true, // 热更新
-
+    open: true,
+    disableHostCheck: true, //
     /**
      * 可以是字符串或对象
      */
     // proxy: '<url>' // 任何未知请求代理到 <url>
     proxy: {
       '/api/': {
-        target: '<url>', // 目标服务器
+        target: '<url>', // 目标服务器 api 服务器
         changeOrigin: true,
         // ws: true, //websocket支持
-        secure: false
-      },
-      '/pbsevice/*': {
-        target: '<url>',
-        changeOrigin: true,
-        secure: false
+        secure: false,
+        pathRewrite: {
+          '^/api/old-path': '/api/new-path', // rewrite path
+          '^/api/remove/path': '/path' // remove base path
+        }
       }
     }
   },

@@ -15,26 +15,30 @@ if (process.env.VUE_APP_CURRENTMODE) {
 Vue.config.productionTip = false
 
 // 基础组件的自动化全局注册
-const requireIcon = require.context('@/icons', false)
-console.log(requireIcon.keys())
-requireIcon.keys().forEach(filename => {
-  const componentConfig = requireIcon(filename)
-  console.log(componentConfig)
+// 将图标全局注册到 Vue 实例上
+// const requireIcon = require.context('@/icons', false)
+// console.log(requireIcon.keys())
+// requireIcon.keys().forEach(filename => {
+//   // const componentConfig = requireIcon(filename)
+//   const componentConfig = requireIcon(filename)
+//   // console.log(componentConfig)
+//   const componentName = filename
+//     .split('/')
+//     .pop()
+//     .replace(/\.\w+\$/, '')
+//   console.log(componentName)
+//   Vue.component(
+//     componentName,
+//     // 如果这个组件选项是通过 `export default` 导出的，
+//     // 那么就会优先使用 `.default`，
+//     // 否则回退到使用模块的根。
+//     componentConfig.default || componentConfig
+//   )
+// })
 
-  const componentName = filename
-    .split('/')
-    .pop()
-    .replace(/\.\w+\$/, '')
-  // console.log(componentName)
-
-  Vue.component(
-    componentName,
-    // 如果这个组件选项是通过 `export default` 导出的，
-    // 那么就会优先使用 `.default`，
-    // 否则回退到使用模块的根。
-    componentConfig.default || componentConfig
-  )
-})
+const requireAll = requireContext => requireContext.keys().map(requireContext)
+const req = require.context('@/icons', false)
+requireAll(req)
 
 new Vue({
   router,
